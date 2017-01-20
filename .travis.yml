@@ -1,0 +1,18 @@
+language: python
+
+matrix:
+    include:
+        - python: 3.5
+    exclude:
+        - python: 2.7
+
+install:
+   - pip install nose
+   - pip install coverage
+
+before_script:
+   - mkdir -p shippable/testresults/
+   - mkdir -p shippable/codecoverage/
+
+script:
+    - nosetests tests --with-xunit --xunit-file=shippable/testresults/nosetests.xml --with-coverage --cover-package $REPO_NAME --cover-xml --cover-xml-file shippable/codecoverage/coverage.xml
