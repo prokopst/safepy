@@ -15,4 +15,4 @@ before_script:
    - mkdir -p shippable/codecoverage/
 
 script:
-    - nosetests tests --with-xunit --xunit-file=shippable/testresults/nosetests.xml --with-coverage --cover-package $REPO_NAME --cover-xml --cover-xml-file shippable/codecoverage/coverage.xml
+    - python setup.py nosetests

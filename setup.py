@@ -29,5 +29,5 @@ setup(
     ],
     keywords="safety microservice microservices",
     test_suite='tests',
-    tests_require=['deasync', 'nose']
+    tests_require=['deasync']
 )
