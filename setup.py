@@ -12,7 +12,7 @@ with open(path.join(here, 'README.rst')) as file:
 
 setup(
     name='safepy',
-    version='0.0.1',
+    version='0.0.1-alpha',
     description="",
     long_description=long_description,
     url='https://github.com/prokopst/safepy',
@@ -20,13 +20,14 @@ setup(
     author="Stanislav Prokop",
     license='Apache 2 License',
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries",
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
     ],
     keywords="safety microservice microservices",
     test_suite='tests',
-    setup_requires=['nose']
+    tests_require=['deasync', 'nose']
 )
