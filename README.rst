@@ -4,7 +4,7 @@ safepy: safety belt for Python distributed services
 .. image:: https://img.shields.io/pypi/v/safepy.svg
     :target: https://pypi.python.org/pypi/safepy
 
-.. image:: https://img.shields.io/pypi/l/safepy.svg
+.. image:: https://img.shields.io/:license-Apache_2_License-blue.svg
     :target: https://github.com/prokopst/safepy/blob/master/LICENSE
 
 .. image:: https://img.shields.io/pypi/pyversions/safepy.svg
@@ -16,7 +16,7 @@ safepy: safety belt for Python distributed services
 .. image:: https://api.shippable.com/projects/587b8d9379509c10004a444b/coverageBadge?branch=master
     :target: https://app.shippable.com/projects/587b8d9379509c10004a444b
 
-Safepy is a latency and fault tolerance library for Python 3.5 (or greater) inspired by `Hystrix <https://github.com/Netflix/Hystrix>`_, `Cloud Design Patterns <https://msdn.microsoft.com/en-us/library/dn568099.aspx>`_, `AWS Architecture Blog <https://www.awsarchitectureblog.com/>`_ and many others.
+Safepy (rhymes with safety) is a latency and fault tolerance library for Python 3.5 (or greater) inspired by `Hystrix <https://github.com/Netflix/Hystrix>`_, `Cloud Design Patterns <https://msdn.microsoft.com/en-us/library/dn568099.aspx>`_, `AWS Architecture Blog <https://www.awsarchitectureblog.com/>`_ and many others.
 
 How to use the library
 ----------------------
