@@ -12,7 +12,7 @@ with open(path.join(here, 'README.rst')) as file:
 
 setup(
     name='safepy',
-    version='0.0.1-alpha',
+    version='0.1.0-alpha',
     description="Safety belt for your Python distributed services.",
     long_description=long_description,
     url='https://github.com/prokopst/safepy',
