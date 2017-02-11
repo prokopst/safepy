@@ -4,7 +4,7 @@ safepy: safety belt for Python distributed services
 .. image:: https://img.shields.io/pypi/v/safepy.svg
     :target: https://pypi.python.org/pypi/safepy
 
-.. image:: https://img.shields.io/:license-Apache_2_License-blue.svg
+.. image:: https://img.shields.io/:license-Apache_2-blue.svg
     :target: https://github.com/prokopst/safepy/blob/master/LICENSE
 
 .. image:: https://img.shields.io/pypi/pyversions/safepy.svg
