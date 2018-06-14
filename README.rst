@@ -10,9 +10,6 @@ safepy: safety belt for Python distributed services
 .. image:: https://img.shields.io/pypi/pyversions/safepy.svg
     :target: https://pypi.python.org/pypi/safepy
 
-.. image:: https://api.shippable.com/projects/587b8d9379509c10004a444b/badge?branch=master
-    :target: https://app.shippable.com/projects/587b8d9379509c10004a444b
-
 .. image:: https://api.shippable.com/projects/587b8d9379509c10004a444b/coverageBadge?branch=master
     :target: https://app.shippable.com/projects/587b8d9379509c10004a444b
 
@@ -25,14 +22,14 @@ You can either use the mechanisms as decorators:
 
 .. code-block:: python
 
-    from safety import retry
+    from safety.retry_mechanism import retry_async
 
     class ProfileService(object):
-        @retry(attempts=3, base_delay=1)
+        @retry_async(attempts=3, base_delay=1)
         async def get_profile(self, username):
             ...
 
-Or to dynamically recreate protected methods:
+Or to dynamically recreate methods:
 
 .. code-block:: python
 
@@ -40,7 +37,7 @@ Or to dynamically recreate protected methods:
 
     class ProfileService(object):
         def __init__(self):
-            self.get_profile = retry(attempts=3, base_delay=1)(
+            self.get_profile = retry_async(attempts=3, base_delay=1)(
                 self.get_profile
             )
 
@@ -55,7 +52,7 @@ Retry
     from safepy import retry
 
     class ServiceA(object):
-        @retry(attempts=3, base_delay=1)
+        @retry_async(attempts=3, base_delay=1)
         async def call():
             ...
 

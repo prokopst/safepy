@@ -1,9 +1,10 @@
-from asyncio import get_event_loop, CancelledError
+from asyncio import get_event_loop
 from unittest import TestCase
 from unittest.mock import Mock, call
 from deasync import deasync
-from safepy.retry_mechanism import ExponentialBackoffStrategy, JitterBackoffStrategy, retry_generic, \
-    retry_with_jitter_backoff, retry_with_exponential_backoff
+from safepy.retry_mechanism.retry_common import ExponentialBackoffStrategy, JitterBackoffStrategy
+from safepy.retry_mechanism.retry_async_mechanism import retry_async_generic
+from safepy.retry_mechanism import retry_async_with_jitter_backoff, retry_async_with_exponential_backoff
 
 loop = get_event_loop()
 
@@ -24,13 +25,13 @@ class TestRetry(TestCase):
         for attempts in [-1, 0]:
             with self.subTest(value=attempts):
                 with self.assertRaises(ValueError):
-                    @retry_generic(attempts=attempts)
+                    @retry_async_generic(attempts=attempts)
                     async def dummy():
                         pass
 
     @deasync
     async def test_retry_succeeds(self):
-        @retry_generic(attempts=1)
+        @retry_async_generic(attempts=1)
         async def function():
             return 42
 
@@ -39,7 +40,7 @@ class TestRetry(TestCase):
 
     @deasync
     async def test_retry_fails(self):
-        @retry_generic(attempts=1)
+        @retry_async_generic(attempts=1)
         async def function():
             raise DummyError()
 
@@ -50,7 +51,7 @@ class TestRetry(TestCase):
     async def test_retry_succeeds_after_retries(self):
         mock = Mock(side_effect=[DummyError(), DummyError(), 42])
 
-        @retry_generic(3, DummyError)
+        @retry_async_generic(3, DummyError)
         async def function(*args):
             return mock(*args)
 
@@ -64,7 +65,7 @@ class TestRetry(TestCase):
     async def test_retry_fails_after_retries(self):
         mock = Mock(side_effect=[DummyError(), DummyError(), DummyError()])
 
-        @retry_generic(3, DummyError)
+        @retry_async_generic(3, DummyError)
         async def function(*args):
             return mock(*args)
 
@@ -80,7 +81,7 @@ class TestRetry(TestCase):
 
         mock = Mock(side_effect=[DummyError(), TotallyUnexpectedError(), 42])
 
-        @retry_generic(3, DummyError)
+        @retry_async_generic(3, lambda e: isinstance(e, DummyError))
         async def function(*args):
             return mock(*args)
 
@@ -89,45 +90,6 @@ class TestRetry(TestCase):
 
         mock.assert_has_calls([call(21), call(21)])
 
-    @deasync
-    async def test_retry_returns_last_exception_on_cancel(self):
-        mock = Mock(side_effect=[DummyError(), CancelledError()])
-
-        @retry_generic(3, DummyError, on_cancel_raise_last=False)
-        async def function(*args):
-            return mock(*args)
-
-        with self.assertRaises(CancelledError):
-            await function(21)
-
-        mock.assert_has_calls([call(21), call(21)])
-
-    @deasync
-    async def test_retry_returns_last_exception_on_cancel(self):
-        mock = Mock(side_effect=[DummyError(), CancelledError()])
-
-        @retry_generic(3, DummyError)
-        async def function(*args):
-            return mock(*args)
-
-        with self.assertRaises(DummyError):
-            await function(21)
-
-        mock.assert_has_calls([call(21), call(21)])
-
-    @deasync
-    async def test_retry_returns_cancel_on_cancel_if_no_exception_available(self):
-        mock = Mock(side_effect=[CancelledError(), 42])
-
-        @retry_generic(3, DummyError)
-        async def function(*args):
-            return mock(*args)
-
-        with self.assertRaises(CancelledError):
-            await function(21)
-
-        mock.assert_has_calls([call(21)])
-
 
 class TestPublicRetryDecorators(TestCase):
     """
@@ -135,7 +97,7 @@ class TestPublicRetryDecorators(TestCase):
     """
     @deasync
     async def test_public_retry_decorators_do_retry(self):
-        for retry in (retry_with_jitter_backoff, retry_with_exponential_backoff):
+        for retry in (retry_async_with_jitter_backoff, retry_async_with_exponential_backoff):
             with self.subTest(retry=retry):
                 mock = Mock(side_effect=[DummyError, 42])
 
